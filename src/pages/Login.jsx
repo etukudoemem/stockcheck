@@ -3,11 +3,11 @@ import { LoginButton } from "../components/buttons/LoginButton"
 import { EmailInput } from "../components/input/EmailInput"
 import { PasswordInput } from "../components/input/PasswordInput"
 import { useContext } from "react"
-import { stockContext } from "../context/stockContext"
+import { userAuthContext } from "../context/userAuthContext"
 
 export const Login = () => {
     const navigate = useNavigate()
-    const { getFormData } = useContext(stockContext)
+    const { getFormData } = useContext(userAuthContext)
     return (
         <>
             <form className="flex justify-center items-center bg" onSubmit={(e) => getFormData(e)}>

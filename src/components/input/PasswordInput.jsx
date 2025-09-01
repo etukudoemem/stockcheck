@@ -1,13 +1,12 @@
-import { useState, useRef, useContext } from "react"
+import { useState, useContext } from "react"
 import { FaLock } from "react-icons/fa"
 import { PiEyeClosedBold } from "react-icons/pi"
 import { VscEye } from "react-icons/vsc"
-import { stockContext } from "../../context/stockContext"
-import { MdOutlineError } from "react-icons/md"
+import { userAuthContext } from "../../context/userAuthContext"
 
 export const PasswordInput = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const { input, setInput } = useContext(stockContext)
+    const { input, setInput } = useContext(userAuthContext)
 
     return (
         <>

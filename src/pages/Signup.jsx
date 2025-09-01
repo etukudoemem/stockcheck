@@ -4,10 +4,10 @@ import { EmailInput } from "../components/input/EmailInput"
 import { NameInput } from "../components/input/NameInput"
 import { PasswordInput } from "../components/input/PasswordInput"
 import { Link } from "react-router-dom"
-import { stockContext } from "../context/stockContext"
+import { userAuthContext } from "../context/userAuthContext"
 
 export const Signup = () => {
-    const { getFormData } = useContext(stockContext)
+    const { getFormData } = useContext(userAuthContext)
 
     return (
         <>

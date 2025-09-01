@@ -1,10 +1,10 @@
 import { useContext } from "react"
 import { FaEnvelope } from "react-icons/fa"
-import { stockContext } from "../../context/stockContext"
+import { userAuthContext } from "../../context/userAuthContext"
 
 
 export const EmailInput = () => {
-    const { input, setInput } = useContext(stockContext)
+    const { input, setInput } = useContext(userAuthContext)
 
     return (
         <>

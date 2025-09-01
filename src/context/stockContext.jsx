@@ -25,11 +25,7 @@ export const StockContextProvider = ({ children }) => {
     const [searchResult, setSearchResult] = useState([])
     const [watchListStocks, setWatchListStocks] = useState([])
     const [searchInput, setSearchInput] = useState("")
-    const [input, setInput] = useState({
-        name: true,
-        email: true,
-        password: true,
-    })
+    
 
     useEffect(() => {
         const setWatchListStorage = () => {
@@ -39,27 +35,7 @@ export const StockContextProvider = ({ children }) => {
     }, [watchListSymbols])
         
 
-    const getFormData = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.target)
-        const name = formData.get("name")
-        const email = formData.get("email")
-        const password = formData.get("password")
-        if (name?.length < 1) {
-            setInput({...input, name:false})
-            return
-        } 
-        if (email.length < 1) {
-            setInput({...input, email:false})
-            return
-        } 
-        if (password.length < 1) {
-            setInput({...input,  password:false})
-            return
-        } 
-        console.log(name, email, password)
-    }
-
+    
     const addStock = async(stockSymbol) => {
         const isInList = watchListSymbols.find((sym) => sym === stockSymbol)
         if (isInList) {
@@ -99,9 +75,6 @@ export const StockContextProvider = ({ children }) => {
     const contextValues = {
         url,
         token,
-        getFormData,
-        input,
-        setInput,
         searchResult,
         setSearchResult,
         TrendingStocks,

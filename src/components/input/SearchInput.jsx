@@ -29,12 +29,17 @@ export const SearchInput = () => {
     let isRunning = true
     
     const fetchStock = async () => {
+        if (params.q.length < 1) {
+            alert('search term cannot be empty')
+            return
+            }
         setIsLoading(true)
 
         try {
+
             const response = await fetch(url+`search?${searchParams}`)
             const result = await response.json()
-            console.log(result.result)
+            console.log(result.result, result)
             if (isRunning) {
                 setSearchResult(result.result)
             }

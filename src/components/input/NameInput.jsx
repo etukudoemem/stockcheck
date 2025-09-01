@@ -1,9 +1,9 @@
 import { useContext } from "react"
 import { FaUser } from "react-icons/fa"
-import { stockContext } from "../../context/stockContext"
+import { userAuthContext } from "../../context/userAuthContext"
 
 export const NameInput = () => {
-    const { input, setInput } = useContext(stockContext)
+    const { input, setInput } = useContext(userAuthContext)
 
     return (
         <>
