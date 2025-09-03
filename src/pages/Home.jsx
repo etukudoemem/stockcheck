@@ -4,7 +4,6 @@ import { stockContext } from "../context/stockContext"
 import { TrendingTable } from "../components/TrendingTable"
 import { Toast } from "../components/modals/Toast"
 import { userAuthContext } from "../context/userAuthContext"
-import { logUserOut } from "../firebase/logUserOut"
 import { FaCheckCircle } from "react-icons/fa"
 
 
@@ -12,7 +11,8 @@ export const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const { toast } = useContext(userAuthContext)
+    const { toast, logUserOut, observeUserStatus } = useContext(userAuthContext)
+    observeUserStatus()
 
     const { url, token, TrendingStocks, setTrendingStocks} = useContext(stockContext)
 
@@ -43,7 +43,7 @@ export const Home = () => {
             setIsLoading(false)
         }
         
-        fetchStock()
+        // fetchStock()
 
         return () => isRunning = false
     }, [])
@@ -68,8 +68,6 @@ export const Home = () => {
                 </section>
                 <section className="flex flex-col justify-center items-center text-center 
                     w-full gap-y-15 mt-40">
-                    <button onClick={logUserOut}
-                        className="bg-black text-white w-auto h-auto px-2 py-1">Logout</button>
                     <Header />
                 </section>
                 <section className="w-full h-auto pb-10">

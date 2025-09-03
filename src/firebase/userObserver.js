@@ -1,13 +1,14 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "../firebase/firebase";
+import { app } from "./firebase";
 
-export const userObserver = () => {
+
+export const userObserver = (setStatus) => {
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            console.log(user.email, user.uid)
+            setStatus(true)
         } else {
-            console.log("not logged in")
+            setStatus(false)
         }
     })
 };

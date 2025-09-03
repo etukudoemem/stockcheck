@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { createUser } from "../firebase/createUser";
 import { userLogin } from "../firebase/userLogin";
+import { userLogout } from "../firebase/userLogout";
 import { app } from "../firebase/firebase"
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom"
@@ -10,6 +11,7 @@ export const userAuthContext = createContext(null)
 
 export const UserAuthContextProvider = ({ children }) => {
 
+    
     const navigate = useNavigate()
 
     const [input, setInput] = useState({
@@ -18,18 +20,26 @@ export const UserAuthContextProvider = ({ children }) => {
             password: true,
         })
 
+    const [userStatus, setUserStatus] = useState(false)
+
     const [toast, setToast] = useState({
             signupSuccess: false,
             loginSuccess: false,
             logoutSuccess: false,
+            addedAlready: false
         })
 
     const activateToast = (toast, toastType) => {
         setTimeout(() => {
             toast[toastType] = true
             setToast({...toast, toastType})
-        }, 2000)
+        }, 1300)
     }
+
+    const observeUserStatus = () => {
+        userObserver(setUserStatus)
+    }
+    observeUserStatus()
 
     const createNewUser = (e) => {
         e.preventDefault()
@@ -80,7 +90,11 @@ export const UserAuthContextProvider = ({ children }) => {
         activateToast(toast, "loginSuccess")
     }
 
-    userObserver()
+    const logUserOut = () => {
+        const auth = getAuth(app)
+        userLogout(auth)
+        activateToast(toast, "logoutSuccess")
+    }
 
     const deactivateToast = () => {
         if (toast.signupSuccess) {
@@ -95,6 +109,18 @@ export const UserAuthContextProvider = ({ children }) => {
             }, 3000)
             return
         }
+        if (toast.logoutSuccess) {
+            setTimeout(() => {
+                setToast({...toast, logoutSuccess:false})
+            }, 3000)
+            return
+        }
+        if (toast.addedAlready) {
+            setTimeout(() => {
+                setToast({...toast, addedAlready:false})
+            }, 3000)
+            return
+        }
 
     }
     deactivateToast()
@@ -103,10 +129,16 @@ export const UserAuthContextProvider = ({ children }) => {
     const contextValues = {
         input,
         setInput,
+        userStatus,
+        setUserStatus,
         toast,
         setToast,
         createNewUser,
         logUserIn,
+        logUserOut,
+        observeUserStatus,
+        activateToast,
+        deactivateToast
     }
 
     return <userAuthContext.Provider value={contextValues}>

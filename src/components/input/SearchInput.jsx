@@ -39,7 +39,7 @@ export const SearchInput = () => {
 
             const response = await fetch(url+`search?${searchParams}`)
             const result = await response.json()
-            console.log(result.result, result)
+            // console.log(result.result, result)
             if (isRunning) {
                 setSearchResult(result.result)
             }
@@ -49,8 +49,6 @@ export const SearchInput = () => {
         setIsLoading(false)
     }
     
-
-
     return (
         <>
             <section className="w-95 h-auto relative text-black font-semibold text-center text-sm">

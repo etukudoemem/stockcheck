@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect} from "react";
+import { createContext, useState, useEffect, useContext} from "react";
+import { userAuthContext } from "./userAuthContext";
 
 export const stockContext = createContext(null)
 
@@ -14,9 +15,6 @@ export const StockContextProvider = ({ children }) => {
     }
 
     const initialState = getWatchListStorage()
-    const clearSymbolsStorage = () => {
-        window.localStorage.removeItem("symbolsList")
-    }
     
     const url = "https://finnhub.io/api/v1/"
     const token = "d2i40cpr01qucbnn2fogd2i40cpr01qucbnn2fp0"
@@ -25,6 +23,7 @@ export const StockContextProvider = ({ children }) => {
     const [searchResult, setSearchResult] = useState([])
     const [watchListStocks, setWatchListStocks] = useState([])
     const [searchInput, setSearchInput] = useState("")
+    const { toast, activateToast, deactivateToast } = useContext(userAuthContext)
     
 
     useEffect(() => {
@@ -39,7 +38,7 @@ export const StockContextProvider = ({ children }) => {
     const addStock = async(stockSymbol) => {
         const isInList = watchListSymbols.find((sym) => sym === stockSymbol)
         if (isInList) {
-            alert("stock already on watch list")
+            activateToast(toast, "addedAlready")
             return 
         } else {
             setwatchListSymbols([stockSymbol, ...watchListSymbols])
@@ -71,7 +70,6 @@ export const StockContextProvider = ({ children }) => {
             })
        )
     }
-
     const contextValues = {
         url,
         token,
@@ -86,8 +84,7 @@ export const StockContextProvider = ({ children }) => {
         watchListStocks,
         setWatchListStocks,
         watchListSymbols,
-        setwatchListSymbols,
-        clearSymbolsStorage
+        setwatchListSymbols
     }
 
     return <stockContext.Provider value={contextValues}>

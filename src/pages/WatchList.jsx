@@ -2,10 +2,15 @@ import { useContext, useEffect } from "react"
 import { SearchInput } from "../components/input/SearchInput"
 import { stockContext } from "../context/stockContext"
 import { WatchListTable } from "../components/WatchListTable"
+import { CgDanger } from "react-icons/cg"
+import { userAuthContext } from "../context/userAuthContext"
+import { Toast } from "../components/modals/Toast"
 
 export const WatchList = () => {
 
-    const { url, token, watchListSymbols, clearSymbolsStorage, setWatchListStocks } = useContext(stockContext)
+    const { toast } = useContext(userAuthContext)
+
+    const { url, token, watchListSymbols, setWatchListStocks } = useContext(stockContext)
 
     useEffect(() => {
         let isRunning = true
@@ -18,7 +23,7 @@ export const WatchList = () => {
             const result = responses.map((response, index) => {
                 return {...response, symbol: watchListSymbols[index]}
                     })
-                console.log(result)
+                // console.log(result)
             if (isRunning) {
                 setWatchListStocks(result)
                 }
@@ -30,7 +35,13 @@ export const WatchList = () => {
     const { watchListStocks } = useContext(stockContext)
 
     return (
-        <>
+        <>  <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.addedAlready ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Already on List!</p>
+                </Toast>
+            </section>
             <main className="w-full h-auto text-black">
                 <section className="w-full h-auto flex flex-col justify-center items-center 
                     gap-y-15">
@@ -43,15 +54,10 @@ export const WatchList = () => {
                     </div>
                     
                     <SearchInput />
-                    {/* button will only be present during development */}
-                    <button onClick={clearSymbolsStorage}
-                        className="bg-black text-white px-4 py-2">
-                        Clear
-                    </button>
                     {watchListStocks.length > 0 ? <div className="w-full h-auto pb-10">
                         <WatchListTable watchListStocks={watchListStocks}/>
                     </div> : 
-                    <div className="flex justify-center items-center text-lg 
+                    <div className="flex justify-center items-center text-sm 
                         font-semibold pb-10">
                         Nothing on your watch list yet...
                     </div>}

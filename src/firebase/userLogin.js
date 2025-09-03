@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const userLogin = (auth, email, password) => {
     signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => { 
+        .then((userCredential) => {
             const user = userCredential.user;
             console.log(user)
         })

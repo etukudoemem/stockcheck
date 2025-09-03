@@ -15,10 +15,10 @@ export const Layout = () => {
                     <Navbar />
                 </div>
                 <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                    ${toast.loginSuccess ? "right-1" : "right-[-100%]"}`}>
+                    ${toast.logoutSuccess ? "right-1" : "right-[-100%]"}`}>
                     <Toast>
                         <FaCheckCircle size={20}/>
-                        <p>You've been logged out!</p>
+                        <p>Logout Successful!</p>
                     </Toast>
                 </section>
                 <Outlet />
