@@ -7,12 +7,12 @@ import { Link } from "react-router-dom"
 import { userAuthContext } from "../context/userAuthContext"
 
 export const Signup = () => {
-    const { getFormData } = useContext(userAuthContext)
+    const { getFormData, createNewUser } = useContext(userAuthContext)
 
     return (
         <>
             <form className="flex justify-center items-center bg" 
-                onSubmit={(e) => getFormData(e)}>
+                onSubmit={(e) => createNewUser(e)}>
                 <div className="h-[100vh] flex flex-col justify-center items-center gap-y-7 
                     text-center font-semibold w-full sm:w-97 relative sm:text-sm">
                     <h2 className="text-2xl md:text-3xl text-white font-bold mb-6">

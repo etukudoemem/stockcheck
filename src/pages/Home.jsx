@@ -2,11 +2,17 @@ import { useState, useEffect, useContext } from "react"
 import { Header } from "../components/Header"
 import { stockContext } from "../context/stockContext"
 import { TrendingTable } from "../components/TrendingTable"
+import { Toast } from "../components/modals/Toast"
+import { userAuthContext } from "../context/userAuthContext"
+import { logUserOut } from "../firebase/logUserOut"
+import { FaCheckCircle } from "react-icons/fa"
 
 
 export const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false)
+
+    const { toast } = useContext(userAuthContext)
 
     const { url, token, TrendingStocks, setTrendingStocks} = useContext(stockContext)
 
@@ -44,9 +50,26 @@ export const Home = () => {
 
     return (
         <>
-            <main className="text-black w-full h-auto flex flex-col gap-y-20">
+            
+            <main className="text-black w-full h-auto flex flex-col gap-y-20 relative">
+                <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                    ${toast.loginSuccess ? "right-1" : "right-[-100%]"}`}>
+                    <Toast>
+                        <FaCheckCircle size={20}/>
+                        <p>Login Successful!</p>
+                    </Toast>
+                </section>
+                <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                    ${toast.signupSuccess ? "right-1" : "right-[-100%]"}`}>
+                    <Toast>
+                        <FaCheckCircle size={20}/>
+                        <p>Account Created!</p>
+                    </Toast>
+                </section>
                 <section className="flex flex-col justify-center items-center text-center 
                     w-full gap-y-15 mt-40">
+                    <button onClick={logUserOut}
+                        className="bg-black text-white w-auto h-auto px-2 py-1">Logout</button>
                     <Header />
                 </section>
                 <section className="w-full h-auto pb-10">
@@ -54,7 +77,7 @@ export const Home = () => {
                         Trending Stocks
                     </h2>
                     {TrendingStocks.length > 0 ? <TrendingTable TrendingStocks={TrendingStocks} /> : 
-                    <div className="flex justify-center items-center text-lg 
+                    <div className="flex justify-center items-center text-sm 
                         font-semibold pb-10 text-red-500">
                         No data to display...
                     </div>}

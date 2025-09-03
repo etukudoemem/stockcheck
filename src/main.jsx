@@ -9,12 +9,12 @@ import { UserAuthContextProvider } from './context/userAuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-        <UserAuthContextProvider>
-            <StockContextProvider>
-                <BrowserRouter>
+        <BrowserRouter>
+            <UserAuthContextProvider>
+                <StockContextProvider>
                     <App />
-                </BrowserRouter>
-            </StockContextProvider>
-        </UserAuthContextProvider>
+                </StockContextProvider>
+            </UserAuthContextProvider>
+        </BrowserRouter>
   </StrictMode>,
 )

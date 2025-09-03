@@ -37,15 +37,15 @@ export const WatchListTable = ({ watchListStocks }) => {
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
                                 </td> */}
-                                <td>${stock.c}</td>
+                                <td>${(stock.c).toFixed(2)}</td>
                                 <td className={`flex justify-center gap-x-[0.5px] items-center ${stock.dp > 0 ? "text-green-500" : "text-red-500"} `}>
-                                    <p>{stock.dp}%</p>
+                                    <p>{(stock.dp).toFixed(2)}%</p>
                                     <div>
                                         {stock.dp > 0 ? <TiArrowSortedUp size={25}/> 
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
                                 </td> 
-                                <td>${stock.h}</td>
+                                <td>${(stock.h).toFixed(2)}</td>
                                 <td onClick={() => deleteStock(stock.symbol)}
                                     className="cursor-pointer">
                                     <TbTrashFilled size={20}/>

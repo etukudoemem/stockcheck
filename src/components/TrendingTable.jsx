@@ -1,6 +1,9 @@
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
+import { useNavigate } from "react-router-dom"
 
 export const TrendingTable = ({ TrendingStocks }) => {
+
+    const navigate = useNavigate()
 
     return (
         <section>
@@ -9,7 +12,7 @@ export const TrendingTable = ({ TrendingStocks }) => {
                     <thead>
                         <tr>
                             <th>Stock Symbol</th>
-                            <th>Change</th>
+                            {/* <th>Change</th> */}
                             <th>Current Price</th>
                             <th>Percent Change</th>
                             <th>Today's High Price</th>
@@ -18,24 +21,24 @@ export const TrendingTable = ({ TrendingStocks }) => {
                     <tbody>
                         {
                         TrendingStocks.map((stock, index) => 
-                            <tr key={index} onClick={() => navigate(`stockdetails/${stock.s}`)}>
+                            <tr key={index} onClick={() => navigate(`watchlist/stockdetails/${stock.s}`)}>
                                 <td>{stock.s}</td>
-                                <td className={`flex justify-center gap-x-1 items-center ${stock.d > 0 ? "text-green-500" : "text-red-500"} `}>
-                                    <p>${stock.d}</p>
+                                {/* <td className={`flex justify-center gap-x-1 items-center ${stock.d > 0 ? "text-green-500" : "text-red-500"} `}>
+                                    <p>${(stock.d).toFixed(2)}</p>
                                     <div>
                                         {stock.d > 0 ? <TiArrowSortedUp size={25}/> 
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
-                                </td>
-                                <td>${stock.c}</td>
+                                </td> */}
+                                <td>${(stock.c).toFixed(2)}</td>
                                 <td className={`flex justify-center gap-x-[0.5px] items-center ${stock.dp > 0 ? "text-green-500" : "text-red-500"} `}>
-                                    <p>{stock.dp}%</p>
+                                    <p>{(stock.dp).toFixed(2)}%</p>
                                     <div>
                                         {stock.dp > 0 ? <TiArrowSortedUp size={25}/> 
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
                                 </td> 
-                                <td>${stock.h}</td>
+                                <td>${(stock.h).toFixed(2)}</td>
                             </tr>
                             )
                         }

@@ -1,8 +1,7 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-export const auth = getAuth();
-export const createUser = async (auth, email, password) => {
+export const createUser = async(auth, email, password) => {
     try {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -15,3 +14,4 @@ export const createUser = async (auth, email, password) => {
         console.log(errorCode, errorMessage)
     }
 }
+
