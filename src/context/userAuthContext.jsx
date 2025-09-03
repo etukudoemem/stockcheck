@@ -107,7 +107,6 @@ export const UserAuthContextProvider = ({ children }) => {
         setToast,
         createNewUser,
         logUserIn,
-        activateToast
     }
 
     return <userAuthContext.Provider value={contextValues}>
