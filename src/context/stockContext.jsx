@@ -22,6 +22,7 @@ export const StockContextProvider = ({ children }) => {
     const [TrendingStocks, setTrendingStocks] = useState([])
     const [searchResult, setSearchResult] = useState([])
     const [watchListStocks, setWatchListStocks] = useState([])
+    const [chartData, setChartData] = useState([])
     const [searchInput, setSearchInput] = useState("")
     const { toast, activateToast, deactivateToast } = useContext(userAuthContext)
     
@@ -51,7 +52,7 @@ export const StockContextProvider = ({ children }) => {
 
         setWatchListStocks([response, ...watchListStocks])
     }
-    console.log(watchListSymbols)
+    // console.log(watchListSymbols)
 
     const deleteStock = (stockSymbol) => {
        const deletedStock = watchListStocks.find((stock) => {
@@ -84,7 +85,9 @@ export const StockContextProvider = ({ children }) => {
         watchListStocks,
         setWatchListStocks,
         watchListSymbols,
-        setwatchListSymbols
+        setwatchListSymbols,
+        chartData,
+        setChartData
     }
 
     return <stockContext.Provider value={contextValues}>

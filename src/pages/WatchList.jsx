@@ -10,7 +10,7 @@ export const WatchList = () => {
 
     const { toast } = useContext(userAuthContext)
 
-    const { url, token, watchListSymbols, setWatchListStocks } = useContext(stockContext)
+    const { url, token, watchListSymbols, watchListStocks, setWatchListStocks } = useContext(stockContext)
 
     useEffect(() => {
         let isRunning = true
@@ -32,7 +32,6 @@ export const WatchList = () => {
         return () => isRunning = false
     }, [])
 
-    const { watchListStocks } = useContext(stockContext)
 
     return (
         <>  <section className={`fixed top-17 transition-all duration-300 ease-in-out

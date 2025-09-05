@@ -15,7 +15,7 @@ function App() {
       <Routes>
           <Route path='/' element={<Layout />}>
               <Route index element={<Home />}/>
-              <Route path='watchlist/stockdetails/:id' element={<StockDetails />}/>
+              <Route path='watchlist/stockdetails/:symbol' element={<StockDetails />}/>
               <Route path='watchlist' element={<WatchList />}/>
           </Route>
           <Route path='login' element={<AuthLayout />}>
