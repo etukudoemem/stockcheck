@@ -46,7 +46,7 @@ export const WatchList = () => {
                 ${toast.notLoggedIn ? "right-1" : "right-[-100%]"}`}>
                 <Toast>
                     <CgDanger size={20}/>
-                    <p>You're Not Logged In!</p>
+                    <p>You're not Logged in!</p>
                 </Toast>
             </section>
             <main className="w-full h-auto text-black">
