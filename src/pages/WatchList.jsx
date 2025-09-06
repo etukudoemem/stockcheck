@@ -34,11 +34,19 @@ export const WatchList = () => {
 
 
     return (
-        <>  <section className={`fixed top-17 transition-all duration-300 ease-in-out
+        <>  
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
                 ${toast.addedAlready ? "right-1" : "right-[-100%]"}`}>
                 <Toast>
                     <CgDanger size={20}/>
                     <p>Already on List!</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.notLoggedIn ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>You're Not Logged In!</p>
                 </Toast>
             </section>
             <main className="w-full h-auto text-black">

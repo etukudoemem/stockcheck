@@ -24,7 +24,7 @@ export const StockContextProvider = ({ children }) => {
     const [watchListStocks, setWatchListStocks] = useState([])
     const [chartData, setChartData] = useState([])
     const [searchInput, setSearchInput] = useState("")
-    const { toast, activateToast, deactivateToast } = useContext(userAuthContext)
+    const { toast, activateToast, deactivateToast, userStatus } = useContext(userAuthContext)
     
 
     useEffect(() => {
@@ -38,6 +38,10 @@ export const StockContextProvider = ({ children }) => {
     
     const addStock = async(stockSymbol) => {
         const isInList = watchListSymbols.find((sym) => sym === stockSymbol)
+        if (!userStatus) {
+            activateToast(toast, "notLoggedIn")
+            return
+        }
         if (isInList) {
             activateToast(toast, "addedAlready")
             return 

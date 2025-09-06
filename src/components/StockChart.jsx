@@ -1,5 +1,5 @@
 import Chart  from "react-apexcharts"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { stockContext } from "../context/stockContext"
 
 export const StockChart = ({ symbol, stockInfo }) => {
@@ -94,13 +94,13 @@ export const StockChart = ({ symbol, stockInfo }) => {
     const params = {
         // interval: "year",
         sort: "asc",
-        date_from: "2025-07-04",
+        date_from: "2025-08-04",
         date_to: "2025-09-02",
         symbols: `${symbol}`,
         api_token: "ey3OKHtdJAxmll4vBj9voNW5SPMGqroCbnPsgLqa"
     }
     const searchParams = new URLSearchParams(params)
-    // useEffect(() => {
+    useEffect(() => {
         let isRunning = true
         const fetchStockData = async() => {
             try {
@@ -110,27 +110,23 @@ export const StockChart = ({ symbol, stockInfo }) => {
                     return {date: (d.date).replace("T00:00:00.000Z", ""), open: d.open}
                 })
                 console.log(finalResult)
-                setChartData(finalResult)
+                if (isRunning) {
+                    setChartData(finalResult)
+                }
                 console.log(chartData)
             } catch (error) {
                 console.log(error + error.message)
             }
         }
-    // fetchStockData()
-//     return () => isRunning = false
-// }, [])
+    fetchStockData()
+    return () => isRunning = false
+}, [])
     // const date = "2025-09-02T00:00:00Z"
     // const newDate = date.replace("T00:00:00Z", "")
 
     return (
         <>
-            <section className="flex justify-center">
-                <button onClick={() => fetchStockData()}
-                    className="py-2 px-4 bg-[#F44336] text-white my-5 rounded">
-                        Show {symbol} Profile
-                </button>
-            </section>
-            <section className="w-full md:w-[80%] mx-auto">
+            <section className="w-[95%] md:w-[80%] mx-auto">
                 <Chart series={series} options={options} height={600}/> 
             </section>
         </>

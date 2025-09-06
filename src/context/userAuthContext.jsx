@@ -25,7 +25,8 @@ export const UserAuthContextProvider = ({ children }) => {
             signupSuccess: false,
             loginSuccess: false,
             logoutSuccess: false,
-            addedAlready: false
+            addedAlready: false,
+            notLoggedIn: false
         })
 
     const activateToast = (toast, toastType) => {
@@ -117,6 +118,12 @@ export const UserAuthContextProvider = ({ children }) => {
         if (toast.addedAlready) {
             setTimeout(() => {
                 setToast({...toast, addedAlready:false})
+            }, 3000)
+            return
+        }
+        if (toast.notLoggedIn) {
+            setTimeout(() => {
+                setToast({...toast, notLoggedIn:false})
             }, 3000)
             return
         }

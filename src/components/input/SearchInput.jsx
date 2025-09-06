@@ -51,7 +51,7 @@ export const SearchInput = () => {
     
     return (
         <>
-            <section className="w-95 h-auto relative text-black font-semibold text-center text-sm">
+            <section className="w-[100%] h-auto relative text-black font-semibold text-center text-sm">
                 <input className="w-[85%] md:w-100 bg-white h-12 md:h-10 rounded-lg px-5 py-2 outline-none
                     placeholder-slate-800/60 border-gray-500 border-1"
                     type="text" 

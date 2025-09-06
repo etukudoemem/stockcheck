@@ -10,12 +10,7 @@ export const StockDetails = () => {
     const [stockInfo, setStockInfo] = useState("")
     const { symbol } = useParams()
     const { url, token } = useContext(stockContext)
-
-    // const { data: stockInfoData } = useFetch(url + `search?q=${symbol}&token=` + token, symbol)
     const { data: stockPricesData } = useFetch(url + `quote?symbol=${symbol}&token=` + token, symbol)
-    // const stockDescription = stockInfoData.result[0].description
-    // const stockSymbol = stockInfoData.result[0].displaySymbol
-    // const stockInfo = {stockDescription, stockSymbol}
 
     useEffect(() => {
         let isRunning = true
@@ -39,7 +34,7 @@ export const StockDetails = () => {
     return (
         <>
             <main className=" w-full h-[100vh]">
-                <section className="mb-20">
+                <section className="my-20">
                     <StockChart symbol={symbol} stockInfo={stockInfo} />
                 </section>
                 <section className="pb-30"> 

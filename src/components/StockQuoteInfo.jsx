@@ -1,3 +1,4 @@
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 
 export const StockQuoteInfo = ({ stockPricesData}) => {
 
@@ -13,11 +14,17 @@ export const StockQuoteInfo = ({ stockPricesData}) => {
                     </div>
                     <div className="flex justify-between w-full h-auto border-b-1 border-black py-5">
                         <p>Change</p>
-                        <p>${stockPricesData.d}</p>
+                        <div className={`flex items-center ${stockPricesData.d > 0 ? "text-green-500" : "text-red-500"}`}>
+                            {stockPricesData.d > 0 ? <TiArrowSortedUp size={20}/> : <TiArrowSortedDown size={20}/>}
+                            <p>${stockPricesData.d}</p>
+                        </div>
                     </div>
                     <div className="flex justify-between w-full h-auto border-b-1 border-black py-5">
-                        <p>Percent Change</p>
-                        <p>${stockPricesData.dp}</p>
+                        <p>Percentage Change</p>
+                        <div className={`flex items-center ${stockPricesData.d > 0 ? "text-green-500" : "text-red-500"}`}>
+                            {stockPricesData.dp > 0 ? <TiArrowSortedUp size={20}/> : <TiArrowSortedDown size={20}/>}
+                            <p>${stockPricesData.dp}</p>
+                        </div>
                     </div>
                     <div className="flex justify-between w-full h-auto border-b-1 border-black py-5">
                         <p>High Price of the day</p>
@@ -32,7 +39,7 @@ export const StockQuoteInfo = ({ stockPricesData}) => {
                         <p>${stockPricesData.o}</p>
                     </div>
                     <div className="flex justify-between w-full h-auto border-b-1 border-black py-5">
-                        <p>Previous close price</p>
+                        <p>Previous Close price</p>
                         <p>${stockPricesData.pc}</p>
                     </div>
                 </section> :

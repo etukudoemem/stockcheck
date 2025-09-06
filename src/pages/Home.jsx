@@ -11,7 +11,7 @@ export const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const { toast, logUserOut, observeUserStatus } = useContext(userAuthContext)
+    const { toast, observeUserStatus } = useContext(userAuthContext)
     observeUserStatus()
 
     const { url, token, TrendingStocks, setTrendingStocks} = useContext(stockContext)
@@ -43,7 +43,7 @@ export const Home = () => {
             setIsLoading(false)
         }
         
-        // fetchStock()
+        fetchStock()
 
         return () => isRunning = false
     }, [])
