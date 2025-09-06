@@ -18,7 +18,7 @@ export const WatchListTable = ({ watchListStocks }) => {
                             <th>Current Price</th>
                             <th>Percent Change</th>
                             <th>Today's High Price</th>
-                            {/* <th></th> */}
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,10 +38,10 @@ export const WatchListTable = ({ watchListStocks }) => {
                                     </div>
                                 </td> 
                                 <td>${(stock.h).toFixed(2)}</td>
-                                {/* <td onClick={() => deleteStock(stock.symbol)}
+                                <td onClick={() => deleteStock(stock.symbol)}
                                     className="cursor-pointer">
                                     <TbTrashFilled size={20}/>
-                                </td> */}
+                                </td>
                             </tr>
                             ) 
                         }
