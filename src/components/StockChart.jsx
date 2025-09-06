@@ -17,7 +17,7 @@ export const StockChart = ({ symbol, stockInfo }) => {
             zoom: {
                 enable: false
             },
-            colors:['#F44336', '#E91E63', '#9C27B0'],
+            // colors:['#F44336', '#E91E63', '#9C27B0'],
         },
         dataLabels: {
             enable: false
@@ -53,11 +53,11 @@ export const StockChart = ({ symbol, stockInfo }) => {
         fill: {
             type: 'gradient',
             gradient: {
-                // shade: 'light',
+                shade: 'light',
                 type: "vertical",
                 shadeIntensity: 0.7,
-                gradientToColors: ['#F44336'], // optional, if not defined - uses the shades of same color in series
-                // inverseColors: true,
+                // gradientToColors: ['#f4433697'], // optional, if not defined - uses the shades of same color in series
+                inverseColors: true,
                 opacityFrom: 0.4,
                 opacityTo: 1,
                 stops: [0, 100],
@@ -73,18 +73,6 @@ export const StockChart = ({ symbol, stockInfo }) => {
                         opacity: 1
                     }
                 ],
-                plotOptions: {
-                    area: {
-                        fillTo: "end",
-                        range: [
-                            {
-                                from: -100,
-                                to: 0,
-                                color:"#f87970ff" 
-                            }
-                        ]
-                    }
-                }
             }
         },
         
@@ -102,7 +90,7 @@ export const StockChart = ({ symbol, stockInfo }) => {
     const searchParams = new URLSearchParams(params)
     useEffect(() => {
         let isRunning = true
-        const fetchStockData = async() => {
+        const fetchChartData = async() => {
             try {
                 const response = await fetch(url + `${searchParams}`)
                 const result = await response.json()
@@ -118,11 +106,9 @@ export const StockChart = ({ symbol, stockInfo }) => {
                 console.log(error + error.message)
             }
         }
-    fetchStockData()
+    fetchChartData()
     return () => isRunning = false
 }, [])
-    // const date = "2025-09-02T00:00:00Z"
-    // const newDate = date.replace("T00:00:00Z", "")
 
     return (
         <>

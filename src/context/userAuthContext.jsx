@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { createUser } from "../firebase/createUser";
 import { userLogin } from "../firebase/userLogin";
 import { userLogout } from "../firebase/userLogout";
@@ -26,7 +26,8 @@ export const UserAuthContextProvider = ({ children }) => {
             loginSuccess: false,
             logoutSuccess: false,
             addedAlready: false,
-            notLoggedIn: false
+            notLoggedIn: false,
+            emptySearch: false
         })
 
     const activateToast = (toast, toastType) => {
@@ -60,10 +61,9 @@ export const UserAuthContextProvider = ({ children }) => {
             setInput({...input,  password:false})
             return
         } 
-        console.log(name, email, password)
+        // console.log(name, email, password)
         const auth = getAuth(app)
         createUser(auth, email, password)
-
         navigate("/")
         activateToast(toast, "signupSuccess")
     }
@@ -82,10 +82,9 @@ export const UserAuthContextProvider = ({ children }) => {
             setInput({...input,  password:false})
             return
         } 
-        console.log(email, password)
+        // console.log(email, password)
         const auth = getAuth(app)
         userLogin(auth, email, password)
-
         navigate("/")
         activateToast(toast, "loginSuccess")
     }
@@ -124,6 +123,12 @@ export const UserAuthContextProvider = ({ children }) => {
         if (toast.notLoggedIn) {
             setTimeout(() => {
                 setToast({...toast, notLoggedIn:false})
+            }, 3000)
+            return
+        }
+        if (toast.emptySearch) {
+            setTimeout(() => {
+                setToast({...toast, emptySearch:false})
             }, 3000)
             return
         }

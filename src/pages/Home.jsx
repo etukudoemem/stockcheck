@@ -22,14 +22,11 @@ export const Home = () => {
             const symbols = ["AAPL", "NFLX", "GOOGL", "MSFT", "DIS", "TSLA", "NVDA", "AMZN", "META"]
 
             try {
-                setIsLoading(true)
 
                 let responses = await Promise.all(symbols.map((symbol) => {
                     return fetch(url + `quote?symbol=${symbol}&token=` + token)
                 }))
-
                 responses = await Promise.all(responses.map((response) => response.json()))
-                
                 const result = responses.map((response, index) => {
                     return {...response, s: symbols[index]}
                 })
@@ -40,7 +37,6 @@ export const Home = () => {
             } catch (error) {
                 console.log(error)
             } 
-            setIsLoading(false)
         }
         
         fetchStock()
@@ -50,8 +46,7 @@ export const Home = () => {
 
     return (
         <>
-            
-            <main className="text-black w-full h-auto flex flex-col gap-y-20 relative">
+            <main className="w-full h-auto flex flex-col gap-y-20 relative">
                 <section className={`fixed top-17 transition-all duration-300 ease-in-out
                     ${toast.loginSuccess ? "right-1" : "right-[-100%]"}`}>
                     <Toast>

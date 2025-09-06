@@ -4,7 +4,7 @@ import { userAuthContext } from "./userAuthContext";
 export const stockContext = createContext(null)
 
 export const StockContextProvider = ({ children }) => {
-
+    
     const getWatchListStorage = () => {
         const symbolsList = window.localStorage.getItem("symbolsList")
         if (symbolsList === null) {
@@ -24,7 +24,7 @@ export const StockContextProvider = ({ children }) => {
     const [watchListStocks, setWatchListStocks] = useState([])
     const [chartData, setChartData] = useState([])
     const [searchInput, setSearchInput] = useState("")
-    const { toast, activateToast, deactivateToast, userStatus } = useContext(userAuthContext)
+    const { toast, activateToast, userStatus } = useContext(userAuthContext)
     
 
     useEffect(() => {
@@ -34,8 +34,7 @@ export const StockContextProvider = ({ children }) => {
         setWatchListStorage()
     }, [watchListSymbols])
         
-
-    
+ 
     const addStock = async(stockSymbol) => {
         const isInList = watchListSymbols.find((sym) => sym === stockSymbol)
         if (!userStatus) {
@@ -50,13 +49,9 @@ export const StockContextProvider = ({ children }) => {
         }
         let response = await fetch(url + `quote?symbol=${stockSymbol}&token=` + token)
         response = await response.json()
-        
         response = {...response, symbol: stockSymbol}
-        console.log(response)
-
         setWatchListStocks([response, ...watchListStocks])
     }
-    // console.log(watchListSymbols)
 
     const deleteStock = (stockSymbol) => {
        const deletedStock = watchListStocks.find((stock) => {
@@ -75,6 +70,7 @@ export const StockContextProvider = ({ children }) => {
             })
        )
     }
+    
     const contextValues = {
         url,
         token,

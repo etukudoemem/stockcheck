@@ -2,12 +2,10 @@ import { useContext, useRef } from "react"
 import { CgClose } from "react-icons/cg"
 import { RiMenu4Fill } from "react-icons/ri"
 import { Link, NavLink } from "react-router-dom"
-import { getAuth } from "firebase/auth"
 import { userAuthContext } from "../context/userAuthContext"
 
 
 export const Navbar = () => {
-    
     const menuElement = useRef(null)
     const handleMenuList = () => {
         menuElement.current.classList.toggle("translate-x-full")
@@ -16,13 +14,12 @@ export const Navbar = () => {
 
     return (
         <>
-           <nav className="bg-[#000815]">
+           <nav className="bg">
                 <div className="w-full h-15 text-white flex justify-between items-center
                     py-5 px-4 md:py-8 md:px-12">
-                    <div className="">
-                       <Link to={'/'}>stockCHECK</Link>
+                    <div className="font-medium">
+                       <Link to={'/'}>stockCheck</Link>
                     </div>
-                    
                     <RiMenu4Fill size={30} className="md:hidden cursor-pointer"
                         onClick={() => handleMenuList()}
                     />
@@ -41,12 +38,13 @@ export const Navbar = () => {
                             <li className=" mb-8 md:mb-0">Watch List</li>
                         </NavLink>
                         
-                        {userStatus ? <NavLink onClick={() => {
+                        {userStatus ? 
+                        <NavLink onClick={() => {
                             handleMenuList()
                             logUserOut()
                             }}
                             className="md:flex items-center justify-center mb-8 md:mb-0 md:border-2 border-white 
-                            md:w-20 md:h-9 block rounded-full">
+                                md:w-20 md:h-9 block rounded-full">
                            <li>Logout</li> 
                         </NavLink> :
                         <NavLink to={"login"} onClick={() => handleMenuList()}

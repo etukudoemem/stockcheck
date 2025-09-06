@@ -16,7 +16,7 @@ export const NameInput = () => {
                     placeholder="name"
                     onChange={() => setInput({...input, name:true})}
                     />
-                {!input.name && <div className="absolute text-red-600 text-[12px] cursor-pointer w-[85%] 
+                {!input.name && <div className="absolute text-red-600 text-[12px] w-[85%] 
                     sm:w-83 text-left top-12">
                     <p>please enter your name</p>
                 </div>}

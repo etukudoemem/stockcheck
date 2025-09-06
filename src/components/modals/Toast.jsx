@@ -1,5 +1,3 @@
-import { CgDanger } from "react-icons/cg"
-
 export const Toast = ({ children }) => {
 
     return (

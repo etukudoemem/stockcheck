@@ -29,15 +29,15 @@ export const WatchListTable = ({ watchListStocks }) => {
                                     className="cursor-pointer">
                                     {stock.symbol}
                                 </td>
-                                <td>${(stock.c).toFixed(2)}</td>
+                                <td>${(stock.c)}</td>
                                 <td className={`flex justify-center gap-x-[0.5px] items-center ${stock.dp > 0 ? "text-green-500" : "text-red-500"} `}>
-                                    <p>{(stock.dp).toFixed(2)}%</p>
+                                    <p>{(stock.dp)}%</p>
                                     <div>
                                         {stock.dp > 0 ? <TiArrowSortedUp size={25}/> 
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
                                 </td> 
-                                <td>${(stock.h).toFixed(2)}</td>
+                                <td>${(stock.h)}</td>
                                 <td onClick={() => deleteStock(stock.symbol)}
                                     className="cursor-pointer">
                                     <TbTrashFilled size={20}/>

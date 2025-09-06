@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { stockContext } from "../../context/stockContext"
 import { useNavigate } from "react-router-dom"
+import { userAuthContext } from "../../context/userAuthContext"
 
 
 export const SearchInput = () => {
@@ -8,7 +9,8 @@ export const SearchInput = () => {
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const { url, token, searchResult, setSearchResult, searchInput, setSearchInput, addStock } = useContext(stockContext)
-
+    const { toast, activateToast } = useContext(userAuthContext)
+    
     useEffect(() => {
         const clearSearchResult = () => {
             if (!searchInput) {
@@ -23,47 +25,50 @@ export const SearchInput = () => {
         q: searchInput,
         token
     }
-    
     const searchParams = new URLSearchParams(params)
 
     let isRunning = true
-    
     const fetchStock = async () => {
         if (params.q.length < 1) {
-            alert('search term cannot be empty')
+            activateToast(toast, "emptySearch")
             return
             }
-        setIsLoading(true)
 
         try {
-
+            setIsLoading(true)
             const response = await fetch(url+`search?${searchParams}`)
             const result = await response.json()
-            // console.log(result.result, result)
             if (isRunning) {
                 setSearchResult(result.result)
             }
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
-        setIsLoading(false)
     }
     
     return (
         <>
-            <section className="w-[100%] h-auto relative text-black font-semibold text-center text-sm">
-                <input className="w-[85%] md:w-100 bg-white h-12 md:h-10 rounded-lg px-5 py-2 outline-none
-                    placeholder-slate-800/60 border-gray-500 border-1"
-                    type="text" 
-                    placeholder="find stock..."
-                    value={searchInput} 
-                    onChange={(e) => setSearchInput(e.target.value)}
-                />
-                {searchResult.length > 0 && <ul className="mx-auto text-left w-[85%] md:w-100 h-70 bg-[inherit]
-                    cursor-pointer border-white shadow-xl mt-1 overflow-y-scroll border-1 border-gray-100 rounded-lg px-4 list">
+            <section className="w-full flex flex-col justify-center h-auto text-black font-semibold text-center text-sm relative">
+                <div className="flex justify-center items-center">
+                    <input className="w-[65%] md:w-100 h-12 bg-white rounded-l-lg px-5 py-2 outline-none
+                        placeholder-slate-800/60 border-gray-500 border-1"
+                        type="text" 
+                        placeholder="find stock..."
+                        value={searchInput} 
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
+                    <button onClick={() => fetchStock()}
+                        className={`h-12 px-4 py-2 rounded-r-lg text-white searchBtn 
+                        cursor-pointer ${isLoading && "animate-pulse"}`}>
+                        {!isLoading ? "Search" : "Searching..."}
+                    </button>
+                </div>
+                {searchResult.length > 0 && <ul className="text-left w-[85%] md:w-120 h-60 mx-auto
+                    cursor-pointer shadow-xl mt-2 overflow-y-scroll rounded-lg px-4 z-10 bg-white">
                     {searchResult.map((stock, index) => 
                         <div key={index} className="flex gap-x-2 items-center">
-                            <li className="w-full py-1 mb-1 ">
+                            <li className="w-full py-1 mb-1">
                                 {stock.description} ({stock.symbol})
                                 <div className="flex items-center gap-x-2 py-1 pr-2 ">
                                     <button onClick={() => navigate(`stockdetails/${stock.symbol}`)}
@@ -82,11 +87,6 @@ export const SearchInput = () => {
                         )
                     }
                 </ul>}
-                <button onClick={() => fetchStock()}
-                    className={`absolute h-12 md:h-10 px-4 py-2 right-[7%] md:right-[-20px] top-0 rounded-r-lg
-                    text-white searchBtn cursor-pointer ${isLoading && "animate-pulse"}`}>
-                    {!isLoading ? "Search" : "Searching..."}
-                </button>
             </section>
         </>
     )

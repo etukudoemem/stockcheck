@@ -49,15 +49,21 @@ export const WatchList = () => {
                     <p>You're not Logged in!</p>
                 </Toast>
             </section>
-            <main className="w-full h-auto text-black">
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.emptySearch ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Empty search term</p>
+                </Toast>
+            </section>
+            <main className="w-full h-auto">
                 <section className="w-full h-auto flex flex-col justify-center items-center 
                     gap-y-15">
                     <div className="w-full h-auto flex flex-col items-center justify-center gap-y-3">
-                        <div className=" text-2xl md:text-4xl 
-                        font-bold mt-40 w-[50%] text-center leading-normal">
-                        <h2>Watch List Stocks</h2>
-                    </div>
-                    <p className="text-center w-[85%]">Add your favourite stocks to your watch list and track them with ease.</p>
+                        <div className=" text-2xl md:text-4xl font-bold mt-40 w-[50%] text-center leading-normal">
+                            <h2>Watch List Stocks</h2>
+                        </div>
+                        <p className="text-center w-[85%]">Add your favourite stocks to your watch list and track them with ease.</p>
                     </div>
                     
                     <SearchInput />
@@ -65,7 +71,7 @@ export const WatchList = () => {
                         <WatchListTable watchListStocks={watchListStocks}/>
                     </div> : 
                     <div className="flex justify-center items-center text-sm 
-                        font-semibold pb-10">
+                        font-semibold text-red-500">
                         Nothing on your watch list yet...
                     </div>}
                 </section>

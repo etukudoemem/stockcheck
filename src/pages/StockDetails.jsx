@@ -44,22 +44,3 @@ export const StockDetails = () => {
         </>
     )
 }
-
-// let isRunning = true
-//         const fetchStockData = async() => {
-//             const response = await fetch(url + `${searchParams}`)
-//             const result = await response.json()
-//             const data = result.data.map((d) => {
-//                 return {date: d.date, open: d.open}
-//             })
-//             console.log(data)
-//             if (isRunning) {
-//                 setChartData(() => {
-//                     return [...data]
-//                 })
-//                 console.log(chartData)
-//             }
-//         }
-//         fetchStockData()
-        
-//         return () => isRunning = false

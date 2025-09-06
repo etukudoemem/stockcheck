@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 import { userAuthContext } from "../context/userAuthContext"
 
 export const Signup = () => {
-    const { getFormData, createNewUser } = useContext(userAuthContext)
+    const { createNewUser } = useContext(userAuthContext)
 
     return (
         <>
