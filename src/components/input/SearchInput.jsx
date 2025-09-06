@@ -65,7 +65,7 @@ export const SearchInput = () => {
                     </button>
                 </div>
                 {searchResult.length > 0 && <ul className="text-left w-[85%] md:w-120 h-60 mx-auto
-                    cursor-pointer shadow-xl mt-2 overflow-y-scroll rounded-lg px-4 z-10 bg-white">
+                    cursor-pointer shadow-xl mt-2 overflow-y-scroll rounded-lg px-4 z-5 bg-white">
                     {searchResult.map((stock, index) => 
                         <div key={index} className="flex gap-x-2 items-center">
                             <li className="w-full py-1 mb-1">
