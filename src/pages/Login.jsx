@@ -2,14 +2,30 @@ import { useNavigate, Link } from "react-router-dom"
 import { LoginButton } from "../components/buttons/LoginButton"
 import { EmailInput } from "../components/input/EmailInput"
 import { PasswordInput } from "../components/input/PasswordInput"
+import { Toast } from "../components/modals/Toast"
+import { CgDanger } from "react-icons/cg"
 import { useContext } from "react"
 import { userAuthContext } from "../context/userAuthContext"
 
 export const Login = () => {
     const navigate = useNavigate()
-    const { logUserIn } = useContext(userAuthContext)
+    const { logUserIn, toast } = useContext(userAuthContext)
     return (
         <>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.networkError ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Network Error</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.credentialsError ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Invalid Details</p>
+                </Toast>
+            </section>
             <form className="flex justify-center items-center bg" onSubmit={(e) => logUserIn(e)}>
                 <div className="h-[100vh] flex flex-col justify-center items-center gap-y-7 
                     text-center font-semibold sm:text-sm relative w-full sm:w-97">

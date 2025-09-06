@@ -1,9 +1,6 @@
 import { createContext, useState } from "react";
-import { createUser } from "../firebase/createUser";
-import { userLogin } from "../firebase/userLogin";
-import { userLogout } from "../firebase/userLogout";
 import { app } from "../firebase/firebase"
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom"
 import { userObserver } from "../firebase/userObserver";
 
@@ -11,6 +8,7 @@ export const userAuthContext = createContext(null)
 
 export const UserAuthContextProvider = ({ children }) => {
 
+    const auth = getAuth(app)
     const navigate = useNavigate()
 
     const [input, setInput] = useState({
@@ -27,7 +25,10 @@ export const UserAuthContextProvider = ({ children }) => {
             logoutSuccess: false,
             addedAlready: false,
             notLoggedIn: false,
-            emptySearch: false
+            emptySearch: false,
+            networkError: false,
+            credentialsError: false,
+            passwordError: false
         })
 
     const activateToast = (toast, toastType) => {
@@ -62,10 +63,29 @@ export const UserAuthContextProvider = ({ children }) => {
             return
         } 
         // console.log(name, email, password)
-        const auth = getAuth(app)
-        createUser(auth, email, password)
-        navigate("/")
-        activateToast(toast, "signupSuccess")
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                navigate("/")
+                activateToast(toast, "signupSuccess")
+                const newUser = userCredential.user
+                console.log(newUser)
+            })
+            .catch ((error) => {
+                if (error.message === "Firebase: Error (auth/network-request-failed).") {
+                    activateToast(toast, "networkError")
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage)
+                    return
+                } 
+                if (error.message === "Firebase: Password should be at least 6 characters (auth/weak-password).") {
+                    activateToast(toast, "passwordError")
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage)
+                    return
+                } 
+            })     
     }
     
 
@@ -82,17 +102,43 @@ export const UserAuthContextProvider = ({ children }) => {
             setInput({...input,  password:false})
             return
         } 
-        // console.log(email, password)
-        const auth = getAuth(app)
-        userLogin(auth, email, password)
-        navigate("/")
-        activateToast(toast, "loginSuccess")
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                navigate("/")
+                activateToast(toast, "loginSuccess")
+                const user = userCredential.user;
+                console.log(user)
+            })
+            .catch((error) => {
+                if (error.message === "Firebase: Error (auth/network-request-failed).") {
+                    activateToast(toast, "networkError")
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage)
+                    return
+                }
+                if (error.message === "Firebase: Error (auth/invalid-credential).") {
+                    activateToast(toast, "credentialsError")
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage)
+                    return
+                }
+            });
     }
 
     const logUserOut = () => {
-        const auth = getAuth(app)
-        userLogout(auth)
-        activateToast(toast, "logoutSuccess")
+        signOut(auth)
+            .then(() => {
+                activateToast(toast, "logoutSuccess")
+                console.log("user logged out successfully.")
+            })
+            .catch ((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+                return
+            })
     }
 
     const deactivateToast = () => {
@@ -129,6 +175,24 @@ export const UserAuthContextProvider = ({ children }) => {
         if (toast.emptySearch) {
             setTimeout(() => {
                 setToast({...toast, emptySearch:false})
+            }, 3000)
+            return
+        }
+        if (toast.networkError) {
+            setTimeout(() => {
+                setToast({...toast, networkError:false})
+            }, 3000)
+            return
+        }
+        if (toast.credentialsError) {
+            setTimeout(() => {
+                setToast({...toast, credentialsError:false})
+            }, 3000)
+            return
+        }
+        if (toast.passwordError) {
+            setTimeout(() => {
+                setToast({...toast, passwordError:false})
             }, 3000)
             return
         }

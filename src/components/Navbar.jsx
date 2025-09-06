@@ -52,10 +52,10 @@ export const Navbar = () => {
                             md:w-20 md:h-9 block rounded-full">
                            <li>Login</li> 
                         </NavLink>}
-                        <NavLink to={"login/signup"} onClick={() => handleMenuList()}
+                        {!userStatus && <NavLink to={"login/signup"} onClick={() => handleMenuList()}
                             className="md:flex items-center justify-center mb-8 md:mb-0 md:bg-[#b4051c] w-23 md:h-9 block rounded-full">
                             <li>Sign Up</li>
-                        </NavLink>
+                        </NavLink>}
                     </ul>
                 </div>
            </nav>

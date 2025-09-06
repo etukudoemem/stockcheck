@@ -3,14 +3,30 @@ import { SignupButton } from "../components/buttons/SignupButton"
 import { EmailInput } from "../components/input/EmailInput"
 import { NameInput } from "../components/input/NameInput"
 import { PasswordInput } from "../components/input/PasswordInput"
+import { Toast } from "../components/modals/Toast"
+import { CgDanger } from "react-icons/cg"
 import { Link } from "react-router-dom"
 import { userAuthContext } from "../context/userAuthContext"
 
 export const Signup = () => {
-    const { createNewUser } = useContext(userAuthContext)
+    const { createNewUser, toast } = useContext(userAuthContext)
 
     return (
         <>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.networkError ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Network Error</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.passwordError ? "right-1" : "right-[-100%]"}`}>
+                <Toast>
+                    <CgDanger size={20}/>
+                    <p>Password less than six(6) Characters</p>
+                </Toast>
+            </section>
             <form className="flex justify-center items-center bg" 
                 onSubmit={(e) => createNewUser(e)}>
                 <div className="h-[100vh] flex flex-col justify-center items-center gap-y-7 
