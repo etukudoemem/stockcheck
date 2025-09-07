@@ -54,7 +54,7 @@ export const SearchInput = () => {
                     <input className="w-[65%] md:w-100 h-12 bg-white rounded-l-lg px-5 py-2 outline-none
                         placeholder-slate-800/60 border-gray-500 border-1"
                         type="text" 
-                        placeholder="find stock..."
+                        placeholder="Find stock..."
                         value={searchInput} 
                         onChange={(e) => setSearchInput(e.target.value)}
                     />

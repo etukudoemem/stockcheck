@@ -26,7 +26,7 @@ export const WatchListTable = ({ watchListStocks }) => {
                         watchListStocks.map((stock, index) => 
                             <tr key={index} >
                                 <td onClick={() => navigate(`stockdetails/${stock.symbol}`)}
-                                    className="cursor-pointer">
+                                    className="cursor-pointer" title="View Stock">
                                     {stock.symbol}
                                 </td>
                                 <td>${(stock.c)}</td>
@@ -40,7 +40,7 @@ export const WatchListTable = ({ watchListStocks }) => {
                                 <td>${(stock.h)}</td>
                                 <td onClick={() => deleteStock(stock.symbol)}
                                     className="cursor-pointer">
-                                    <TbTrashFilled size={20}/>
+                                    <TbTrashFilled size={20} title="Delete"/>
                                 </td>
                             </tr>
                             ) 

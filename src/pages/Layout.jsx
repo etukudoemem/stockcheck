@@ -15,9 +15,9 @@ export const Layout = () => {
                     <Navbar />
                 </div>
                 <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                    ${toast.logoutSuccess ? "right-1" : "right-[-100%]"}`}>
+                    ${toast.logoutSuccess ? "right-2" : "right-[-100%]"}`}>
                     <Toast>
-                        <FaCheckCircle size={20}/>
+                        <FaCheckCircle size={20} className="text-green-500"/>
                         <p>Logout Successful!</p>
                     </Toast>
                 </section>

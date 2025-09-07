@@ -47,10 +47,18 @@ export const StockContextProvider = ({ children }) => {
         } else {
             setwatchListSymbols([stockSymbol, ...watchListSymbols])
         }
-        let response = await fetch(url + `quote?symbol=${stockSymbol}&token=` + token)
-        response = await response.json()
-        response = {...response, symbol: stockSymbol}
-        setWatchListStocks([response, ...watchListStocks])
+        try {
+            let response = await fetch(url + `quote?symbol=${stockSymbol}&token=` + token)
+            response = await response.json()
+            response = {...response, symbol: stockSymbol}
+            setWatchListStocks([response, ...watchListStocks])
+        } catch (error) {
+            if (error) {
+                activateToast(toast, "fetchFailed")
+                return
+            }
+            console.log(error + ":" + error.message)
+        }
     }
 
     const deleteStock = (stockSymbol) => {

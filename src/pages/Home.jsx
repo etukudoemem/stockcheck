@@ -5,13 +5,14 @@ import { TrendingTable } from "../components/TrendingTable"
 import { Toast } from "../components/modals/Toast"
 import { userAuthContext } from "../context/userAuthContext"
 import { FaCheckCircle } from "react-icons/fa"
+import { BsFillExclamationCircleFill } from "react-icons/bs"
 
 
 export const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const { toast, observeUserStatus } = useContext(userAuthContext)
+    const { toast, activateToast, observeUserStatus } = useContext(userAuthContext)
     observeUserStatus()
 
     const { url, token, TrendingStocks, setTrendingStocks} = useContext(stockContext)
@@ -22,7 +23,6 @@ export const Home = () => {
             const symbols = ["AAPL", "NFLX", "GOOGL", "MSFT", "DIS", "TSLA", "NVDA", "AMZN", "META"]
 
             try {
-
                 let responses = await Promise.all(symbols.map((symbol) => {
                     return fetch(url + `quote?symbol=${symbol}&token=` + token)
                 }))
@@ -35,7 +35,11 @@ export const Home = () => {
                     setTrendingStocks(result)
                  }
             } catch (error) {
-                console.log(error)
+                if (error) {
+                    activateToast(toast, "fetchFailed")
+                    return
+                }
+                console.log(error + ":" + error.message)
             } 
         }
         
@@ -46,21 +50,28 @@ export const Home = () => {
 
     return (
         <>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.loginSuccess ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <FaCheckCircle size={20} className="text-green-500"/>
+                    <p>Login Successful!</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.signupSuccess ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <FaCheckCircle size={20} className="text-green-500"/>
+                    <p>Account Created!</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.fetchFailed ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                    <p>Failed to fetch Trending Stocks</p>
+                </Toast>
+            </section>
             <main className="w-full h-auto flex flex-col gap-y-20 relative">
-                <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                    ${toast.loginSuccess ? "right-1" : "right-[-100%]"}`}>
-                    <Toast>
-                        <FaCheckCircle size={20}/>
-                        <p>Login Successful!</p>
-                    </Toast>
-                </section>
-                <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                    ${toast.signupSuccess ? "right-1" : "right-[-100%]"}`}>
-                    <Toast>
-                        <FaCheckCircle size={20}/>
-                        <p>Account Created!</p>
-                    </Toast>
-                </section>
                 <section className="flex flex-col justify-center items-center text-center 
                     w-full gap-y-15 mt-40">
                     <Header />

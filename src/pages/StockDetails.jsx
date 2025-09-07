@@ -1,15 +1,18 @@
-// import { useContext } from "react"
 import { StockChart } from "../components/StockChart"
 import { StockQuoteInfo } from "../components/StockQuoteInfo"
+import { Toast } from "../components/modals/Toast"
+import { BsFillExclamationCircleFill } from "react-icons/bs"
 import { useContext, useEffect, useState } from "react"
 import { useFetch } from "../hooks/useFetch"
 import { stockContext } from "../context/stockContext"
 import { useParams } from "react-router-dom"
+import { userAuthContext } from "../context/userAuthContext"
 
 export const StockDetails = () => {
     const [stockInfo, setStockInfo] = useState("")
     const { symbol } = useParams()
     const { url, token } = useContext(stockContext)
+    const { toast, activateToast } = useContext(userAuthContext)
     const { data: stockPricesData } = useFetch(url + `quote?symbol=${symbol}&token=` + token, symbol)
 
     useEffect(() => {
@@ -24,7 +27,11 @@ export const StockDetails = () => {
                     setStockInfo(finalResult)  
                 }
             } catch (error) {
-                console.log(error)
+                if (error) {
+                    activateToast(toast, "fetchFailed")
+                    return
+                }
+                console.log(error + ":" + error.message)
             }
         }
         fetchInfo()

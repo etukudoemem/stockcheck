@@ -14,14 +14,14 @@ export const Signup = () => {
     return (
         <>
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                ${toast.networkError ? "right-1" : "right-[-100%]"}`}>
+                ${toast.networkError ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
                     <CgDanger size={20}/>
                     <p>Network Error</p>
                 </Toast>
             </section>
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                ${toast.passwordError ? "right-1" : "right-[-100%]"}`}>
+                ${toast.passwordError ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
                     <CgDanger size={20}/>
                     <p>Password less than six(6) Characters</p>

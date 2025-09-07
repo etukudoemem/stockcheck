@@ -23,7 +23,7 @@ export const StockQuoteInfo = ({ stockPricesData}) => {
                         <p>Percentage Change</p>
                         <div className={`flex items-center ${stockPricesData.d > 0 ? "text-green-500" : "text-red-500"}`}>
                             {stockPricesData.dp > 0 ? <TiArrowSortedUp size={20}/> : <TiArrowSortedDown size={20}/>}
-                            <p>${stockPricesData.dp}</p>
+                            <p>{stockPricesData.dp}%</p>
                         </div>
                     </div>
                     <div className="flex justify-between w-full h-auto border-b-1 border-black py-5">

@@ -2,32 +2,39 @@ import { useContext, useEffect } from "react"
 import { SearchInput } from "../components/input/SearchInput"
 import { stockContext } from "../context/stockContext"
 import { WatchListTable } from "../components/WatchListTable"
-import { CgDanger } from "react-icons/cg"
+import { BsFillExclamationCircleFill } from "react-icons/bs"
 import { userAuthContext } from "../context/userAuthContext"
 import { Toast } from "../components/modals/Toast"
 
 export const WatchList = () => {
 
-    const { toast } = useContext(userAuthContext)
+    const { toast, activateToast } = useContext(userAuthContext)
 
     const { url, token, watchListSymbols, watchListStocks, setWatchListStocks } = useContext(stockContext)
 
     useEffect(() => {
         let isRunning = true
         const fetchWatchList = async() => {
-            let responses = await Promise.all(watchListSymbols.map((symbol) => {
-            return fetch(url + `quote?symbol=${symbol}&token=` + token)
-                }))
+            try {
+                let responses = await Promise.all(watchListSymbols.map((symbol) => {
+                return fetch(url + `quote?symbol=${symbol}&token=` + token)
+                    }))
 
-            responses = await Promise.all(responses.map((response) => response.json()))
-            const result = responses.map((response, index) => {
-                return {...response, symbol: watchListSymbols[index]}
-                    })
-                // console.log(result)
-            if (isRunning) {
-                setWatchListStocks(result)
-                }
+                responses = await Promise.all(responses.map((response) => response.json()))
+                const result = responses.map((response, index) => {
+                    return {...response, symbol: watchListSymbols[index]}
+                        })
+                if (isRunning) {
+                    setWatchListStocks(result)
+                    }
+                } catch (error) {
+                    if (error) {
+                        activateToast(toast, "fetchFailed")
+                        return
+                    }
+                console.log(error + ":" + error.message)
             }
+        }
         fetchWatchList()
         return () => isRunning = false
     }, [])
@@ -36,24 +43,31 @@ export const WatchList = () => {
     return (
         <>  
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                ${toast.addedAlready ? "right-1" : "right-[-100%]"}`}>
+                ${toast.addedAlready ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
-                    <CgDanger size={20}/>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
                     <p>Already on List!</p>
                 </Toast>
             </section>
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                ${toast.notLoggedIn ? "right-1" : "right-[-100%]"}`}>
+                ${toast.notLoggedIn ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
-                    <CgDanger size={20}/>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
                     <p>You're not Logged in!</p>
                 </Toast>
             </section>
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
-                ${toast.emptySearch ? "right-1" : "right-[-100%]"}`}>
+                ${toast.emptySearch ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
-                    <CgDanger size={20}/>
-                    <p>Empty search term</p>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                    <p>No search term</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.fetchFailed ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                    <p>Failed to fetch Watch list</p>
                 </Toast>
             </section>
             <main className="w-full h-auto">

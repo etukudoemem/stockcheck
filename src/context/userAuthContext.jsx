@@ -28,7 +28,8 @@ export const UserAuthContextProvider = ({ children }) => {
             emptySearch: false,
             networkError: false,
             credentialsError: false,
-            passwordError: false
+            passwordError: false,
+            fetchFailed: false
         })
 
     const activateToast = (toast, toastType) => {
@@ -73,16 +74,10 @@ export const UserAuthContextProvider = ({ children }) => {
             .catch ((error) => {
                 if (error.message === "Firebase: Error (auth/network-request-failed).") {
                     activateToast(toast, "networkError")
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage)
                     return
                 } 
                 if (error.message === "Firebase: Password should be at least 6 characters (auth/weak-password).") {
                     activateToast(toast, "passwordError")
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage)
                     return
                 } 
             })     
@@ -112,16 +107,10 @@ export const UserAuthContextProvider = ({ children }) => {
             .catch((error) => {
                 if (error.message === "Firebase: Error (auth/network-request-failed).") {
                     activateToast(toast, "networkError")
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage)
                     return
                 }
                 if (error.message === "Firebase: Error (auth/invalid-credential).") {
                     activateToast(toast, "credentialsError")
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage)
                     return
                 }
             });
@@ -193,6 +182,12 @@ export const UserAuthContextProvider = ({ children }) => {
         if (toast.passwordError) {
             setTimeout(() => {
                 setToast({...toast, passwordError:false})
+            }, 3000)
+            return
+        }
+        if (toast.fetchFailed) {
+            setTimeout(() => {
+                setToast({...toast, fetchFailed:false})
             }, 3000)
             return
         }

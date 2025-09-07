@@ -1,9 +1,13 @@
 import Chart  from "react-apexcharts"
+import { Toast } from "./modals/Toast"
+import { BsFillExclamationCircleFill } from "react-icons/bs"
 import { useContext, useEffect } from "react"
 import { stockContext } from "../context/stockContext"
+import { userAuthContext } from "../context/userAuthContext"
 
 export const StockChart = ({ symbol, stockInfo }) => {
     const { chartData, setChartData } = useContext(stockContext)
+    const { toast, activateToast } = useContext(userAuthContext)
     const series = [
         {
             name: `${symbol} Stock`,
@@ -17,10 +21,10 @@ export const StockChart = ({ symbol, stockInfo }) => {
             zoom: {
                 enable: false
             },
-            // colors:['#F44336', '#E91E63', '#9C27B0'],
+            colors:['#F44336', '#E91E63', '#9C27B0'],
         },
         dataLabels: {
-            enable: false
+            enabled: false
         },
         stroke: {
             curve: "smooth",
@@ -41,7 +45,7 @@ export const StockChart = ({ symbol, stockInfo }) => {
             },
         labels: chartData.map((d) => d.date),
         xaxis: {
-            type: "date"
+            type: "datetime"
         },
         yaxis: {
             opposite: false
@@ -56,23 +60,23 @@ export const StockChart = ({ symbol, stockInfo }) => {
                 shade: 'light',
                 type: "vertical",
                 shadeIntensity: 0.7,
-                // gradientToColors: ['#f4433697'], // optional, if not defined - uses the shades of same color in series
+                gradientToColors: ['#f4433697'], // optional, if not defined - uses the shades of same color in series
                 inverseColors: true,
-                opacityFrom: 0.4,
-                opacityTo: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0,
                 stops: [0, 100],
-                colorStops: [
-                    {
-                        offset: 10,
-                        color: '#F44336',
-                        opacity: 1
-                    },
-                    {
-                        offset: 30,
-                        color: '#f87970ff',
-                        opacity: 1
-                    }
-                ],
+                // colorStops: [
+                //     {
+                //         offset: 10,
+                //         color: '#F44336',
+                //         opacity: 0.8
+                //     },
+                //     {
+                //         offset: 80,
+                //         color: '#ef817981',
+                //         opacity: 0.5
+                //     }
+                // ],
             }
         },
         
@@ -83,7 +87,7 @@ export const StockChart = ({ symbol, stockInfo }) => {
         // interval: "year",
         sort: "asc",
         date_from: "2025-08-04",
-        date_to: "2025-09-02",
+        // date_to: "2025-09-02",
         symbols: `${symbol}`,
         api_token: "ey3OKHtdJAxmll4vBj9voNW5SPMGqroCbnPsgLqa"
     }
@@ -103,7 +107,10 @@ export const StockChart = ({ symbol, stockInfo }) => {
                 }
                 console.log(chartData)
             } catch (error) {
-                console.log(error + error.message)
+                if (error) {
+                    activateToast(toast, "fetchFailed")
+                    return
+                }
             }
         }
     fetchChartData()
@@ -113,7 +120,14 @@ export const StockChart = ({ symbol, stockInfo }) => {
     return (
         <>
             <section className="w-[95%] md:w-[80%] mx-auto">
-                <Chart series={series} options={options} height={600}/> 
+                <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                    ${toast.fetchFailed ? "right-2" : "right-[-100%]"}`}>
+                    <Toast>
+                        <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                        <p>Failed to fetch Chart data</p>
+                    </Toast>
+                </section>
+                <Chart series={series} options={options} type="area" height={600}/> 
             </section>
         </>
     )
