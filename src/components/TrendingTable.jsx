@@ -12,7 +12,7 @@ export const TrendingTable = ({ TrendingStocks }) => {
                     <thead>
                         <tr>
                             <th>Stock Symbol</th>
-                            {/* <th>Change</th> */}
+                            <th>Change</th>
                             <th>Current Price</th>
                             <th>Percent Change</th>
                             <th>Today's High Price</th>
@@ -23,13 +23,13 @@ export const TrendingTable = ({ TrendingStocks }) => {
                         TrendingStocks.map((stock, index) => 
                             <tr key={index}>
                                 <td>{stock.s}</td>
-                                {/* <td className={`flex justify-center gap-x-1 items-center ${stock.d > 0 ? "text-green-500" : "text-red-500"} `}>
+                                <td className={`flex justify-center gap-x-1 items-center ${stock.d > 0 ? "text-green-500" : "text-red-500"} `}>
                                     <p>${(stock.d).toFixed(2)}</p>
                                     <div>
                                         {stock.d > 0 ? <TiArrowSortedUp size={25}/> 
                                             : <TiArrowSortedDown size={25}/>}
                                     </div>
-                                </td> */}
+                                </td>
                                 <td>${(stock.c).toFixed(2)}</td>
                                 <td className={`flex justify-center gap-x-[0.5px] items-center ${stock.dp > 0 ? "text-green-500" : "text-red-500"} `}>
                                     <p>{(stock.dp).toFixed(2)}%</p>
