@@ -41,20 +41,25 @@ export const StockContextProvider = ({ children }) => {
             activateToast(toast, "notLoggedIn")
             return
         }
-        if (isInList) {
-            activateToast(toast, "addedAlready")
-            return 
-        } else {
-            setwatchListSymbols([stockSymbol, ...watchListSymbols])
-        }
+
         try {
             let response = await fetch(url + `quote?symbol=${stockSymbol}&token=` + token)
             response = await response.json()
             response = {...response, symbol: stockSymbol}
-            setWatchListStocks([response, ...watchListStocks])
+            
+            if (response) {
+                if (isInList) {
+                    activateToast(toast, "addedAlready")
+                    return 
+                } else {
+                    setWatchListStocks([response, ...watchListStocks])
+                    setwatchListSymbols([stockSymbol, ...watchListSymbols])
+                }
+            }
+            
         } catch (error) {
             if (error) {
-                activateToast(toast, "fetchFailed")
+                activateToast(toast, "addFailed")
                 return
             }
             console.log(error + ":" + error.message)

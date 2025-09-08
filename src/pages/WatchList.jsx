@@ -46,7 +46,7 @@ export const WatchList = () => {
                 ${toast.addedAlready ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
                     <BsFillExclamationCircleFill size={20} className="text-red-500"/>
-                    <p>Already on List!</p>
+                    <p>Already on Watch list!</p>
                 </Toast>
             </section>
             <section className={`fixed top-17 transition-all duration-300 ease-in-out
@@ -68,6 +68,20 @@ export const WatchList = () => {
                 <Toast>
                     <BsFillExclamationCircleFill size={20} className="text-red-500"/>
                     <p>Couldn't fetch current Watch list</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.addFailed ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                    <p>Couldn't Add Stock to Watch list</p>
+                </Toast>
+            </section>
+            <section className={`fixed top-17 transition-all duration-300 ease-in-out
+                ${toast.searchFailed ? "right-2" : "right-[-100%]"}`}>
+                <Toast>
+                    <BsFillExclamationCircleFill size={20} className="text-red-500"/>
+                    <p>Couldn't complete search</p>
                 </Toast>
             </section>
             <main className="w-full h-auto">

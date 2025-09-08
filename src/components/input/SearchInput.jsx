@@ -41,16 +41,20 @@ export const SearchInput = () => {
             if (isRunning) {
                 setSearchResult(result.result)
             }
-            setIsLoading(false)
         } catch (error) {
-            console.log(error)
+            if (error) {
+                activateToast(toast, "searchFailed")
+                return
+            }
+        } finally {
+            setIsLoading(false)
         }
     }
     
     return (
         <>
             <section className="w-full flex flex-col justify-center h-auto text-black font-semibold text-center text-sm relative">
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center relative">
                     <input className="w-[65%] md:w-100 h-12 bg-white rounded-l-lg px-5 py-2 outline-none
                         placeholder-slate-800/60 border-gray-500 border-1"
                         type="text" 
@@ -60,12 +64,13 @@ export const SearchInput = () => {
                     />
                     <button onClick={() => fetchStock()}
                         className={`h-12 px-4 py-2 rounded-r-lg text-white searchBtn 
-                        cursor-pointer ${isLoading && "animate-pulse"}`}>
-                        {!isLoading ? "Search" : "Searching..."}
+                        cursor-pointer ${isLoading && "w-18 md:w-23"}`}>
+                        {!isLoading ? "Search" : ""}
                     </button>
+                    {isLoading && <div className="loader absolute right-10 md:right-13 top-[20%] "></div>}
                 </div>
                 {searchResult.length > 0 && <ul className="text-left w-[85%] md:w-120 h-60 mx-auto
-                    cursor-pointer shadow-xl mt-2 overflow-y-scroll rounded-lg px-4 z-5 bg-white">
+                    cursor-pointer shadow-xl mt-2 overflow-y-scroll rounded-lg px-4 bg-white">
                     {searchResult.map((stock, index) => 
                         <div key={index} className="flex gap-x-2 items-center">
                             <li className="w-full py-1 mb-1">

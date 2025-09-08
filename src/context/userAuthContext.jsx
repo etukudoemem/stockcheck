@@ -28,7 +28,9 @@ export const UserAuthContextProvider = ({ children }) => {
             networkError: false,
             credentialsError: false,
             passwordError: false,
-            fetchFailed: false
+            fetchFailed: false,
+            addFailed: false,
+            searchFailed: false
         })
 
     const activateToast = (toast, toastType) => {
@@ -63,7 +65,6 @@ export const UserAuthContextProvider = ({ children }) => {
         } 
         
         // console.log(name, email, password)
-        
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 navigate("/")
@@ -121,11 +122,10 @@ export const UserAuthContextProvider = ({ children }) => {
         signOut(auth)
             .then(() => {
                 activateToast(toast, "logoutSuccess")
-                console.log("user logged out successfully.")
             })
             .catch ((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                // const errorCode = error.code;
+                // const errorMessage = error.message;
                 // console.log(errorCode, errorMessage)
                 return
             })
@@ -189,6 +189,18 @@ export const UserAuthContextProvider = ({ children }) => {
         if (toast.fetchFailed) {
             setTimeout(() => {
                 setToast({...toast, fetchFailed:false})
+            }, 3000)
+            return
+        }
+        if (toast.addFailed) {
+            setTimeout(() => {
+                setToast({...toast, addFailed:false})
+            }, 3000)
+            return
+        }
+        if (toast.searchFailed) {
+            setTimeout(() => {
+                setToast({...toast, searchFailed:false})
             }, 3000)
             return
         }
