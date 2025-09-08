@@ -11,10 +11,9 @@ export const useFetch = (url, symbol) => {
                 const response = await fetch(url)
                 const result = await response.json()
                 if (isRunning) {
-                   setData(result) 
+                   setData([result]) 
                 }
             } catch (error) {
-                console.log(error, error.message)
             }
         }
         fetchData(url)

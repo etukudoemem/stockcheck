@@ -22,7 +22,6 @@ export const StockDetails = () => {
                 const response = await fetch(url + `search?q=${symbol}&token=` + token)
                 const result = await response.json()
                 const finalResult = result.result[0].description
-                console.log(finalResult)
                 if (isRunning) {
                     setStockInfo(finalResult)  
                 }
@@ -31,7 +30,7 @@ export const StockDetails = () => {
                     activateToast(toast, "fetchFailed")
                     return
                 }
-                console.log(error + ":" + error.message)
+                // console.log(error + ":" + error.message)
             }
         }
         fetchInfo()

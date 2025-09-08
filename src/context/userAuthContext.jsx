@@ -10,7 +10,6 @@ export const UserAuthContextProvider = ({ children }) => {
 
     const auth = getAuth(app)
     const navigate = useNavigate()
-
     const [input, setInput] = useState({
             name: true,
             email: true,
@@ -50,7 +49,6 @@ export const UserAuthContextProvider = ({ children }) => {
         const name = formData.get("name")
         const email = formData.get("email")
         const password = formData.get("password")
-
         if (name.length < 1) {
             setInput({...input, name:false})
             return
@@ -63,13 +61,15 @@ export const UserAuthContextProvider = ({ children }) => {
             setInput({...input,  password:false})
             return
         } 
+        
         // console.log(name, email, password)
+        
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 navigate("/")
                 activateToast(toast, "signupSuccess")
-                const newUser = userCredential.user
-                console.log(newUser)
+                // const newUser = userCredential.user
+                // console.log(newUser)
             })
             .catch ((error) => {
                 if (error.message === "Firebase: Error (auth/network-request-failed).") {
@@ -79,8 +79,9 @@ export const UserAuthContextProvider = ({ children }) => {
                 if (error.message === "Firebase: Password should be at least 6 characters (auth/weak-password).") {
                     activateToast(toast, "passwordError")
                     return
-                } 
-            })     
+                }  
+            })
+        // setIsLoading(false)       
     }
     
 
@@ -102,7 +103,7 @@ export const UserAuthContextProvider = ({ children }) => {
                 navigate("/")
                 activateToast(toast, "loginSuccess")
                 const user = userCredential.user;
-                console.log(user)
+                // console.log(user)
             })
             .catch((error) => {
                 if (error.message === "Firebase: Error (auth/network-request-failed).") {
@@ -125,7 +126,7 @@ export const UserAuthContextProvider = ({ children }) => {
             .catch ((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
+                // console.log(errorCode, errorMessage)
                 return
             })
     }

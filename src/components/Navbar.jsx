@@ -25,7 +25,7 @@ export const Navbar = () => {
                     />
                     <ul ref={menuElement}
                         className={`fixed md:static md:flex md:justify-between md:items-center text-white
-                        w-65 h-[100vh] md:max-w-100 md:h-auto right-0 top-0 menuBg translate-x-full md:translate-x-0
+                        w-65 h-[100vh] md:w-100 md:h-auto right-0 top-0 menuBg translate-x-full md:translate-x-0
                         px-7 md:px-0 duration-700 ease-in-out z-10 `}>
 
                         <CgClose className="mt-5 mb-20 md:hidden cursor-pointer" size={25}

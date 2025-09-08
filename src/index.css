@@ -93,3 +93,38 @@ ul::-webkit-scrollbar {
     background-image: inherit
   }
 }
+
+/* .loader {
+  animation-name: loader;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+  animation-delay: 0s;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+} */
+
+/* .loader::after {
+  content: '';
+   animation-name: loader;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+  animation-delay: 500ms;
+  width: 80%;
+  height: 80%;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 10%;
+  left: 150%;
+} */
+
+/* @keyframes loader {
+  0%, 100% {
+    scale: 150%;
+  }
+} */

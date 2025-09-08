@@ -67,7 +67,7 @@ export const WatchList = () => {
                 ${toast.fetchFailed ? "right-2" : "right-[-100%]"}`}>
                 <Toast>
                     <BsFillExclamationCircleFill size={20} className="text-red-500"/>
-                    <p>Failed to fetch Watch list</p>
+                    <p>Couldn't fetch current Watch list</p>
                 </Toast>
             </section>
             <main className="w-full h-auto">

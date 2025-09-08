@@ -28,20 +28,26 @@ export const StockChart = ({ symbol, stockInfo }) => {
         },
         stroke: {
             curve: "smooth",
-            lineCap: "round"
+            lineCap: "round",
+            width: 2,
         },
         title: {
-            text: `${stockInfo} (${symbol}) stocks analysis`,
+            text: `${stockInfo} (${symbol})`,
             align: "left",
             style: {
                 fontFamily: "Quicksand",
-                fontSize: "14px",
+                fontSize: "16px",
                 color: "#F44336"
             }
         },
         subtitle: {
             text: 'Price Movements',
             align: 'left',
+            style: {
+                fontFamily: "Quicksand",
+                fontSize: "14px",
+                color: "#000"
+            }
             },
         labels: chartData.map((d) => d.date),
         xaxis: {
@@ -101,11 +107,9 @@ export const StockChart = ({ symbol, stockInfo }) => {
                 const finalResult = result.data.map((d) => {
                     return {date: (d.date).replace("T00:00:00.000Z", ""), open: d.open}
                 })
-                console.log(finalResult)
                 if (isRunning) {
                     setChartData(finalResult)
                 }
-                console.log(chartData)
             } catch (error) {
                 if (error) {
                     activateToast(toast, "fetchFailed")
@@ -124,7 +128,7 @@ export const StockChart = ({ symbol, stockInfo }) => {
                     ${toast.fetchFailed ? "right-2" : "right-[-100%]"}`}>
                     <Toast>
                         <BsFillExclamationCircleFill size={20} className="text-red-500"/>
-                        <p>Failed to fetch Chart data</p>
+                        <p>Couldn't fetch current Chart data</p>
                     </Toast>
                 </section>
                 <Chart series={series} options={options} type="area" height={600}/> 
